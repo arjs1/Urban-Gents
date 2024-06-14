@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "138953422638",
+    "project_id": "urban-gents",
+    "storage_bucket": "urban-gents.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:138953422638:android:d6a28f1a09af429bb06cbf",
+        "android_client_info": {
+          "package_name": "com.example.urban_gent"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBMk28eGyPRL61zJb0hieqlAYk_7HRRenk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
