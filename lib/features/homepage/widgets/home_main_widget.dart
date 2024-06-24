@@ -8,6 +8,7 @@ import 'package:urban_gents_app/core/provider/shop_page_provider.dart';
 import 'package:urban_gents_app/core/utilis/carousel_data.dart';
 import 'package:urban_gents_app/features/collectionpage/collection_page.dart';
 import 'package:urban_gents_app/features/homepage/model/carousel_model.dart';
+import 'package:urban_gents_app/features/homepage/model/product_model.dart';
 import 'package:urban_gents_app/features/homepage/widgets/carousel_widget.dart';
 import 'package:urban_gents_app/features/homepage/widgets/clothes_container.dart';
 import 'package:urban_gents_app/features/homepage/widgets/header_page.dart';
@@ -25,6 +26,7 @@ class _HomeMainWidgetState extends State<HomeMainWidget> {
   @override
   Widget build(BuildContext context) {
     final products = context.watch<ShopPageProvider>().shop;
+
     return Scaffold(
       backgroundColor: Colors.black87,
       body: Consumer<ShopPageProvider>(
@@ -45,7 +47,7 @@ class _HomeMainWidgetState extends State<HomeMainWidget> {
               Container(
                 width: MediaQuery.of(context).size.width * 2,
                 decoration: BoxDecoration(
-                  color: Colors.grey[100],
+                  color: Colors.grey[200],
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(15),
                     topRight: Radius.circular(15),
@@ -69,11 +71,9 @@ class _HomeMainWidgetState extends State<HomeMainWidget> {
                                     builder: (context) =>
                                         const CollectionPage(),
                                     settings: RouteSettings(
-                                      arguments: CarouselModel(
-                                        imagePath:
-                                            carouseldata[itemIndex].imagePath,
-                                        category:
-                                            carouseldata[itemIndex].category,
+                                      arguments: ProductCart.individualCart(
+                                        products,
+                                        Category.casual,
                                       ),
                                     ),
                                   ),
@@ -124,7 +124,7 @@ class _HomeMainWidgetState extends State<HomeMainWidget> {
                         ListView.separated(
                           physics: NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
-                          itemCount: 4,
+                          itemCount: 2,
                           separatorBuilder: (BuildContext context, int index) {
                             return SizedBox(
                               height: 12,

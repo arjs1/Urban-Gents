@@ -16,6 +16,7 @@ class ShopPageProvider extends ChangeNotifier {
           "Regular-fit shirt in a woven cotton and linen blend. Resort collar, buttons without placket, and open chest pocket. Short sleeves, yoke at back with darts, and a straight-cut hem. Cotton and linen blends combine the softness of cotton with the sturdiness of linen, creating a beautiful, textured fabric that is breathable and perfectly draped.",
       productLength: "Regular length",
       productFit: "Regular fit",
+      category: Category.casual,
     ),
     ProductModel(
       productname: "Regular Fit Linen-blend Pants",
@@ -29,6 +30,7 @@ class ShopPageProvider extends ChangeNotifier {
           "Regular-fit pants in an airy, woven cotton and linen blend. Regular waist, waistband with drawstring and covered elastic, and zip fly with hook-and-eye fastening. Side pockets and a welt back pocket. Cotton and linen blends combine the softness of cotton with the sturdiness of linen, creating a beautiful, textured fabric that is breathable and perfectly draped.",
       productLength: "Long",
       productFit: "Regular fit",
+      category: Category.casual,
     ),
     ProductModel(
       productname: "Regular Fit T-shirt",
@@ -42,6 +44,7 @@ class ShopPageProvider extends ChangeNotifier {
           "Regular-fit, crew-neck T-shirt in lightweight cotton jersey with a printed motif at front and comfortable, classic silhouette.",
       productLength: "Regular length",
       productFit: "Regular fit",
+      category: Category.casual,
     ),
     ProductModel(
       productname: "Regular Fit Rib-knit Resort Shirt",
@@ -56,6 +59,7 @@ class ShopPageProvider extends ChangeNotifier {
           "Regular-fit, rib-knit shirt in a viscose and cotton blend. Resort collar, buttons at front, and short sleeves.",
       productLength: "Regular length",
       productFit: "Regular fit",
+      category: Category.casual,
     ),
     ProductModel(
       productname: "Baggy Jeans",
@@ -70,8 +74,10 @@ class ShopPageProvider extends ChangeNotifier {
           "5-pocket jeans in rigid cotton denim. Baggy fit from seat to hem with plenty of room around legs. Regular waist, zip fly, and dropped gusset. Rounded legs, stacked at ankle. It's denim perfection.",
       productLength: " Long",
       productFit: "Loose fit",
+      category: Category.casual,
     ),
   ];
+  // list of products
   List<ProductModel> _cart = [];
   List<ProductModel> _wishlist = [];
 
@@ -79,8 +85,25 @@ class ShopPageProvider extends ChangeNotifier {
   List<ProductModel> get wishlist => _wishlist;
   List<ProductModel> get cart => _cart;
 
+  int _count = 0;
+  int get count {
+    print(_count);
+    return _count;
+  }
+
   void addToCart(ProductModel item) {
     _cart.add(item);
+    notifyListeners();
+  }
+
+  void increment() {
+    _count = _count + 1;
+
+    notifyListeners();
+  }
+
+  void decrement() {
+    _count = _count - 1;
     notifyListeners();
   }
 
@@ -98,11 +121,6 @@ class ShopPageProvider extends ChangeNotifier {
   bool isExist(ProductModel item) {
     final isExist = _wishlist.contains(item);
     return isExist;
-  }
-
-  void removeFromWishlist(ProductModel item) {
-    _wishlist.remove(item);
-    notifyListeners();
   }
 
   void removeFromCart(ProductModel item) {

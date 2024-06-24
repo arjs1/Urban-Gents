@@ -28,7 +28,7 @@ class _WishlistPageState extends State<WishlistPage> {
               style: GoogleFonts.poppins(
                 color: Colors.white,
                 fontSize: 15,
-                fontWeight: FontWeight.w600,
+                fontWeight: FontWeight.w500,
                 letterSpacing: 1,
               ),
             ),

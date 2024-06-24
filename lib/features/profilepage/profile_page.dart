@@ -1,7 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -19,13 +17,27 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey.shade100,
-      // appBar: AppBar(
-      //   backgroundColor: Colors.transparent,
-      //   leading: IconButton(
-      //     onPressed: widget.signUserOut,
-      //     icon: Icon(Icons.logout),
-      //   ),
-      // ),
+      appBar: AppBar(
+        backgroundColor: Colors.black87,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+          ),
+        ),
+        title: Text(
+          "Profile".toUpperCase(),
+          style: GoogleFonts.poppins(
+            color: Colors.white,
+            fontWeight: FontWeight.w500,
+            letterSpacing: 1,
+            fontSize: 16,
+          ),
+        ),
+      ),
       body: ListView(
         children: [
           SizedBox(

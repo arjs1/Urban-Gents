@@ -1,25 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:urban_gents_app/core/provider/shop_page_provider.dart';
-import 'package:urban_gents_app/features/descriptionpage/description_page.dart';
 import 'package:urban_gents_app/features/homepage/model/product_model.dart';
 
-class ClothesContainer extends StatelessWidget {
-  final ProductModel product;
-  const ClothesContainer({
-    super.key,
-    required this.product,
-  });
-  void addtowishlist(BuildContext context) {
-    context.read<ShopPageProvider>().addToWishlist(product);
+import 'icon_button.dart';
+
+class CartContainer extends StatelessWidget {
+  final ProductModel cartProduct;
+  const CartContainer({super.key, required this.cartProduct});
+  void removeFromCart(BuildContext context) {
+    context.read<ShopPageProvider>().removeFromCart(cartProduct);
   }
 
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<ShopPageProvider>(context);
-
+    final counter = provider.count;
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -28,7 +25,7 @@ class ClothesContainer extends StatelessWidget {
           width: 150,
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: NetworkImage(product.productimage),
+              image: NetworkImage(cartProduct.productimage),
               fit: BoxFit.cover,
             ),
             borderRadius: BorderRadius.circular(12),
@@ -39,19 +36,14 @@ class ClothesContainer extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(4.0),
                 child: GestureDetector(
-                  onTap: () => addtowishlist(context),
+                  onTap: () => removeFromCart(context),
                   child: Container(
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
                       color: Colors.grey.shade200,
                       borderRadius: BorderRadius.circular(40),
                     ),
-                    child: !provider.isExist(product)
-                        ? Icon(Icons.favorite_border_outlined)
-                        : Icon(
-                            Icons.favorite,
-                            color: Colors.red,
-                          ),
+                    child: Icon(Icons.remove),
                   ),
                 ),
               ),
@@ -59,7 +51,7 @@ class ClothesContainer extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 12),
           child: SizedBox(
             width: MediaQuery.of(context).size.width / 2,
             child: Column(
@@ -69,34 +61,8 @@ class ClothesContainer extends StatelessWidget {
                 SizedBox(
                   height: 10,
                 ),
-                Row(
-                  children: [
-                    Icon(
-                      Icons.star,
-                      size: 18,
-                      color: Colors.amber.shade600,
-                    ),
-                    Text(
-                      product.productstar,
-                      style: GoogleFonts.poppins(),
-                    ),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    Text(
-                      product.productreview,
-                      style: GoogleFonts.poppins(
-                        color: Colors.grey.shade500,
-                        fontSize: 9,
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 2,
-                ),
                 Text(
-                  product.productname,
+                  cartProduct.productname,
                   style: GoogleFonts.poppins(
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
@@ -106,7 +72,7 @@ class ClothesContainer extends StatelessWidget {
                   height: 4,
                 ),
                 Text(
-                  product.productprice,
+                  cartProduct.productprice,
                   style: GoogleFonts.poppins(
                     fontWeight: FontWeight.bold,
                     fontSize: 18,
@@ -115,25 +81,41 @@ class ClothesContainer extends StatelessWidget {
                 SizedBox(
                   height: 6,
                 ),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => DescriptionPage(
-                          product: product,
+                Row(
+                  children: [
+                    QuantityButton(
+                      icon: Icons.remove,
+                      onTap: () {
+                        provider.decrement();
+                      },
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                      child: Container(
+                        width: 70,
+                        height: 30,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: Colors.grey.shade600,
+                        ),
+                        child: Consumer<ShopPageProvider>(
+                          builder: (context, value, child) {
+                            return Text(
+                              "${value.count}",
+                              style: GoogleFonts.poppins(color: Colors.white),
+                            );
+                          },
                         ),
                       ),
-                    );
-                  },
-                  child: Text(
-                    "view more",
-                    style: GoogleFonts.poppins(
-                      fontSize: 10,
-                      color: Colors.grey.shade600,
                     ),
-                  ),
-                ),
+                    QuantityButton(
+                      icon: Icons.add,
+                      onTap: () {
+                        provider.increment();
+                      },
+                    )
+                  ],
+                )
               ],
             ),
           ),
